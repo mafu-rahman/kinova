@@ -11,6 +11,7 @@
 ###
 
 # Changes by Mahfuz Rahman
+# Using the arm to grap and pick block 20cm away
 
 import sys
 import os
