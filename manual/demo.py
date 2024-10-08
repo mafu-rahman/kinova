@@ -149,10 +149,10 @@ def example_cartesian_action_movement(base, base_cyclic):
     feedback = base_cyclic.RefreshFeedback()
 
     cartesian_pose = action.reach_pose.target_pose
-    cartesian_pose.x = feedback.base.tool_pose_x          # (meters)
-    cartesian_pose.y = feedback.base.tool_pose_y - 0.1    # (meters)
-    cartesian_pose.z = feedback.base.tool_pose_z - 0.2    # (meters)
-    cartesian_pose.theta_x = feedback.base.tool_pose_theta_x # (degrees)
+    cartesian_pose.x = feedback.base.tool_pose_x      # (meters)
+    cartesian_pose.y = feedback.base.tool_pose_y   # (meters)
+    cartesian_pose.z = feedback.base.tool_pose_z    # (meters)
+    cartesian_pose.theta_x = feedback.base.tool_pose_theta_x + 30 # (degrees)
     cartesian_pose.theta_y = feedback.base.tool_pose_theta_y # (degrees)
     cartesian_pose.theta_z = feedback.base.tool_pose_theta_z # (degrees)
 
@@ -193,50 +193,98 @@ def main():
 
         # Example core
         success = True
-
-        success &= example_move_to_home_position(base)
-        set_gripper(base, 1.0)
-        for i in range(10):
-            print(get_gripper(base))
-            time.sleep(0.2)
-        set_gripper(base, 0)
-        for i in range(10):
-            print(get_gripper(base))
-            time.sleep(0.2)
             
-        # success &= example_cartesian_action_movement(base, base_cyclic)
-        # success &= example_angular_action_movement(base, [0,0,0,0,0,0])
-        # success &= example_angular_action_movement(base, [154,0,0,0,0,0])
-        # success &= example_angular_action_movement(base, [-154,0,0,0,0,0])
-        # success &= example_angular_action_movement(base, [0,0,0,0,0,0])
-        # success &= example_angular_action_movement(base, [0,-45,0,0,0,0])
-        # success &= example_angular_action_movement(base, [0,45,0,0,0,0])
-        # success &= example_angular_action_movement(base, [0,0,0,0,0,0])
-        # success &= example_angular_action_movement(base, [0,0,45,0,0,0])
-        # success &= example_angular_action_movement(base, [0,0,-45,0,0,0])
-        # success &= example_angular_action_movement(base, [0,0,0,0,0,0])
-        # success &= example_angular_action_movement(base, [0,0,0,45,0,0])
-        # success &= example_angular_action_movement(base, [0,0,0,-45,0,0])
-        # success &= example_angular_action_movement(base, [0,0,0,0,0,0])
-        # success &= example_angular_action_movement(base, [0,0,0,0,45,0])
-        # success &= example_angular_action_movement(base, [0,0,0,0,-45,0])
-        # success &= example_angular_action_movement(base, [0,0,0,0,0,0])
-        # success &= example_angular_action_movement(base, [0,0,0,0,0,45])
-        # success &= example_angular_action_movement(base, [0,0,0,0,0,-45])
-        # success &= example_angular_action_movement(base, [45,-45,0,0,0,0])
-
         
-        input("Press return to grab block")
-        set_gripper(base, 1.0)
-        time.sleep(2)
-        print(get_gripper(base))
-        success &= example_angular_action_movement(base, [0,-45,45,0,0,0])
+	#Home
+        #success &= example_move_to_home_position(base)
+                
+         
+        ##### First #####
+              
+        #Open
         set_gripper(base, 0.0)
         time.sleep(2)
-        success &= example_move_to_home_position(base)
+        print(get_gripper(base))
+        
+        #Reach Initial
+        success &= example_angular_action_movement(base, [-30,-38,125,0,0,-25])
+        
+        #Grab
+        set_gripper(base, 0.75)
+        time.sleep(2)
+        print(get_gripper(base))
+        
+        #Reach Final
+        success &= example_angular_action_movement(base, [-30,-38,125,0,0,-25])
+        
+        #Open
+        set_gripper(base, 0.0)
+        time.sleep(2)
+        print(get_gripper(base))
+        
+        ###############################
 
-        # You can also refer to the 110-Waypoints examples if you want to execute
-        # a trajectory defined by a series of waypoints in joint space or in Cartesian space
+        
+        # #Home
+        # success &= example_move_to_home_position(base)
+        
+        # ##### Second #####
+              
+        # #Reach Initial
+        # success &= example_angular_action_movement(base, [-30,-38,125,0,0,-25])
+        
+        # #Grab
+        # set_gripper(base, 0.75)
+        # time.sleep(2)
+        # print(get_gripper(base))
+        
+        # #Reach Final
+        # success &= example_angular_action_movement(base, [-30,-38,125,0,0,-25])
+        
+        # #Open
+        # set_gripper(base, 0.0)
+        # time.sleep(2)
+        # print(get_gripper(base))
+        
+        # ###############################
+
+        
+        # #Home
+        # success &= example_move_to_home_position(base)
+        
+        
+        # ###### Third ######
+        # #Reach Initial
+        # success &= example_angular_action_movement(base, [-30,-38,125,0,0,-25])
+        
+        # #Grab
+        # set_gripper(base, 0.75)
+        # time.sleep(2)
+        # print(get_gripper(base))
+        
+        # #Reach Final
+        # success &= example_angular_action_movement(base, [-30,-38,125,0,0,-25])
+        
+        # #Open
+        # set_gripper(base, 0.0)
+        # time.sleep(2)
+        # print(get_gripper(base))
+        
+        # ###############################
+
+        
+        # #Home
+        # success &= example_move_to_home_position(base)
+        
+        
+        
+        
+        #2nd axis - increasing value raises it up
+        #3rd axis - increasing value raises it down
+        
+        
+        
+        
 
         return 0 if success else 1
 
